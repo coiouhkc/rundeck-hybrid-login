@@ -1,0 +1,39 @@
+<project name="Rundeck Hybrid Login Module extension" default="build" basedir=".">
+	<property name="app.name" value="rundeck-hybrid-login-ext" />
+	<property name="app.version" value="0.1" />
+
+	<property name="dir.src" value="src" />
+	<property name="dir.lib" value="lib" />
+	<property name="dir.build" value="build" />
+	<property name="dir.build.classes" value="${dir.build}/temp_classes" />
+
+	<path id="compile.classpath">
+		<fileset dir="${dir.lib}" >
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="clean">
+		<delete dir="${dir.build}" />
+	</target>
+
+	<target name="prepare">
+		<mkdir dir="${dir.build}"/>
+		<mkdir dir="${dir.build.classes}"/>
+	</target>
+
+	<target name="build" depends="clean, prepare">
+		<javac target="1.5" srcdir="${dir.src}" destdir="${dir.build.classes}" debug="true">
+			<classpath refid="compile.classpath" />
+		</javac>
+
+		<jar destfile="${dir.build}/${app.name}-${app.version}.jar" basedir="${dir.build.classes}" index="true">
+			<manifest>
+				<attribute name="Title" value="${app.name}"/>
+				<attribute name="Version" value="${app.version}"/>
+			</manifest>
+		</jar>
+	</target>
+
+
+</project>
